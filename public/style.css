@@ -19,3 +19,12 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.navbar {
+  padding: 20px;
+  border-bottom: 1px solid black;
+}
+
+.body-padding {
+  padding: 20px;
+}
