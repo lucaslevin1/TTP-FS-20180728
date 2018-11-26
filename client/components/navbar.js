@@ -3,28 +3,40 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {Grid, Header, List} from 'semantic-ui-react'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
+  <div className="navbar">
+    <Grid>
+      <Grid.Column floated="left" width={8}>
+        <Header as="h1">TTP Stock Portfolio App</Header>
+      </Grid.Column>
+      <Grid.Column floated="right" width={8} textAlign="right">
+        <List horizontal>
+          {isLoggedIn ? (
+            <React.Fragment>
+              <List.Item>
+                <Link to="/home">Home</Link>
+              </List.Item>
+              <List.Item>
+                <a href="#" onClick={handleClick}>
+                  Logout
+                </a>
+              </List.Item>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <List.Item>
+                <Link to="/login">Login</Link>
+              </List.Item>
+              <List.Item>
+                <Link to="/signup">Sign Up</Link>
+              </List.Item>
+            </React.Fragment>
+          )}
+        </List>
+      </Grid.Column>
+    </Grid>
   </div>
 )
 
