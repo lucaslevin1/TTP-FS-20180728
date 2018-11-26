@@ -2,6 +2,7 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const {Trade} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -12,7 +13,23 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
+  const trades = await Promise.all([
+    Trade.create({
+      symbol: 'AAPL',
+      shares: 20,
+      price: 20.14,
+      userId: 1
+    }),
+    Trade.create({
+      symbol: 'GOOG',
+      shares: 40,
+      price: 30.14,
+      userId: 1
+    })
+  ])
+
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${trades.length} trades`)
   console.log(`seeded successfully`)
 }
 
