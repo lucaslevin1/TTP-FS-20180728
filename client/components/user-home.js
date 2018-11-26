@@ -1,16 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Portfolio from './portfolio'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email} = props
-
+export const UserHome = () => {
   return (
     <div className="body-padding">
-      <h3>Welcome, {email}</h3>
+      <Portfolio />
     </div>
   )
 }
@@ -20,7 +16,8 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    trades: state.user.trades
   }
 }
 
