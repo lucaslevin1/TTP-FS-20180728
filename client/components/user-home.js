@@ -1,34 +1,39 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import React, {Component} from 'react'
+import Portfolio from './portfolio'
+import Trades from './trades'
+import {Menu} from 'semantic-ui-react'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email} = props
+class UserHome extends Component {
+  constructor() {
+    super()
+    this.state = {tab: 'Portfolio'}
+    this.handleClick = this.handleClick.bind(this)
+  }
 
-  return (
-    <div className="body-padding">
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
-}
+  handleClick = tab => {
+    this.setState({tab})
+  }
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email
+  render() {
+    const {tab} = this.state
+    return (
+      <div className="body-padding">
+        <Menu pointing secondary>
+          <Menu.Item
+            name="portfolio"
+            active={tab === 'Portfolio'}
+            onClick={() => this.handleClick('Portfolio')}
+          />
+          <Menu.Item
+            name="transactions"
+            active={tab === 'Transactions'}
+            onClick={() => this.handleClick('Transactions')}
+          />
+        </Menu>
+        {tab === 'Portfolio' ? <Portfolio /> : <Trades />}
+      </div>
+    )
   }
 }
 
-export default connect(mapState)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default UserHome

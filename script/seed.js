@@ -25,6 +25,12 @@ async function seed() {
       shares: 40,
       price: 30.14,
       userId: 1
+    }),
+    Trade.create({
+      symbol: 'AAPL',
+      shares: 30,
+      price: 40.36,
+      userId: 1
     })
   ])
 
