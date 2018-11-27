@@ -5,7 +5,6 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body)
     if (req.user) {
       const {symbol, quantity, price} = req.body
       const trade = await Trade.create({
@@ -15,6 +14,8 @@ router.post('/', async (req, res, next) => {
         userId: req.user.id
       })
       res.status(200).send(trade)
+    } else {
+      res.status(401).send('Need to be logged in to make a trade.')
     }
   } catch (error) {
     next(error)
