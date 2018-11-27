@@ -6,25 +6,6 @@ import {Grid, Header} from 'semantic-ui-react'
 import {IEXClient} from 'iex-api'
 import DollarComp from './dollar-comp'
 
-const consolidateTrades = trades => {
-  const tradeObj = {}
-  const endArr = []
-  trades.forEach(trade => {
-    let symbol = trade.symbol
-    if (!tradeObj[symbol]) {
-      tradeObj[symbol] = trade.shares
-    } else {
-      tradeObj[symbol] = tradeObj[symbol] + trade.shares
-    }
-  })
-  for (let key in tradeObj) {
-    if (tradeObj.hasOwnProperty(key)) {
-      endArr.push({symbol: key, shares: tradeObj[key]})
-    }
-  }
-  return endArr
-}
-
 class Portfolio extends Component {
   constructor() {
     super()
@@ -35,7 +16,7 @@ class Portfolio extends Component {
 
   async stocksForDisplay() {
     const {trades} = this.props
-    const stocks = consolidateTrades(trades)
+    const stocks = this.consolidateTrades(trades)
     const fetch = window.fetch.bind(window)
     const iex = new IEXClient(fetch)
     for (let i = 0; i < stocks.length; i++) {
@@ -58,6 +39,25 @@ class Portfolio extends Component {
     }
   }
 
+  consolidateTrades = trades => {
+    const tradeObj = {}
+    const endArr = []
+    trades.forEach(trade => {
+      let symbol = trade.symbol
+      if (!tradeObj[symbol]) {
+        tradeObj[symbol] = trade.shares
+      } else {
+        tradeObj[symbol] = tradeObj[symbol] + trade.shares
+      }
+    })
+    for (let key in tradeObj) {
+      if (tradeObj.hasOwnProperty(key)) {
+        endArr.push({symbol: key, shares: tradeObj[key]})
+      }
+    }
+    return endArr
+  }
+
   calcCurrentValue = stocks => {
     return stocks.reduce((accum, stock) => {
       return accum + stock.latestPrice * stock.shares
@@ -66,10 +66,11 @@ class Portfolio extends Component {
 
   render() {
     const {stocks} = this.state
-    const {trades} = this.props
+    const {trades, name} = this.props
     const currentValue = this.calcCurrentValue(stocks)
     return (
       <div>
+        <Header>Welcome {name}</Header>
         <Header as="h3">
           Portfolio (Current Value: <DollarComp money={currentValue} />)
         </Header>
@@ -87,7 +88,8 @@ class Portfolio extends Component {
 }
 
 const mapState = state => ({
-  trades: state.user.trades
+  trades: state.user.trades,
+  name: state.user.name
 })
 
 export default connect(mapState)(Portfolio)
