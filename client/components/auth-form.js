@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {Form, Button, Header} from 'semantic-ui-react'
 
-/**
- * COMPONENT
- */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
   return (

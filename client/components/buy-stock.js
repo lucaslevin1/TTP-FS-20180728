@@ -3,6 +3,7 @@ import {Header, Form, Button} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {buyStock} from '../store/trades'
 import DollarComp from './dollar-comp'
+import BuyStockErrors from './buy-stock-errors'
 
 class BuyStock extends Component {
   availableCash = stocks => {
@@ -15,13 +16,7 @@ class BuyStock extends Component {
   }
 
   render() {
-    const {
-      stocks,
-      buyAStock,
-      quantityError,
-      symbolError,
-      overageError
-    } = this.props
+    const {stocks, buyAStock} = this.props
     let availableCash = 5000
     if (stocks) availableCash = this.availableCash(stocks)
     return (
@@ -49,41 +44,15 @@ class BuyStock extends Component {
           </Form.Group>
           <Button type="submit">Buy</Button>
         </Form>
-        {symbolError ? (
-          <p className="red">Error: Invalid stock symbol.</p>
-        ) : (
-          <div />
-        )}
-        {quantityError ? (
-          <p className="red">
-            Error: Invalid quantity. The quantity needs to be greater than 0 and
-            a whole number.
-          </p>
-        ) : (
-          <div />
-        )}
-        {overageError ? (
-          <p className="red">
-            Error: You do not have the funds in your account to purchase this
-            stock at this quantity.
-          </p>
-        ) : (
-          <div />
-        )}
+        <BuyStockErrors />
       </React.Fragment>
     )
   }
 }
-
-const mapState = state => ({
-  quantityError: state.trades.quantityError,
-  symbolError: state.trades.symbolError,
-  overageError: state.trades.overageError
-})
 
 const mapDispatch = dispatch => ({
   buyAStock: (symbol, quantity, availableCash) =>
     dispatch(buyStock(symbol, quantity, availableCash))
 })
 
-export default connect(mapState, mapDispatch)(BuyStock)
+export default connect(null, mapDispatch)(BuyStock)
