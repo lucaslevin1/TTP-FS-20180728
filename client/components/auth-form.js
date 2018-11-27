@@ -9,32 +9,24 @@ import {Form, Button} from 'semantic-ui-react'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
   return (
     <div className="body-padding">
       <Form onSubmit={handleSubmit} name={name}>
         <Form.Field>
           <label htmlFor="email">Email</label>
-          <input name="email" type="text" />
+          <input name="email" type="text" placeholder="Email" />
         </Form.Field>
         <Form.Field>
           <label htmlFor="password">Password</label>
-          <input name="password" type="password" />
+          <input name="password" type="password" placeholder="Password" />
         </Form.Field>
-        <Button>{displayName}</Button>
+        <Button type="submit">{displayName}</Button>
         {error && error.response && <div> {error.response.data} </div>}
       </Form>
     </div>
   )
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = state => {
   return {
     name: 'login',

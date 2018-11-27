@@ -32,7 +32,7 @@ class Portfolio extends Component {
     }
   }
 
-  async componentDidMount() {
+  async stocksForDisplay() {
     const {trades} = this.props
     const stocks = consolidateTrades(trades)
     const fetch = window.fetch.bind(window)
@@ -42,7 +42,19 @@ class Portfolio extends Component {
       stocks[i].latestPrice = info.latestPrice
       stocks[i].open = info.open
     }
+    return stocks
+  }
+
+  async componentDidMount() {
+    const stocks = await this.stocksForDisplay()
     this.setState({stocks})
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.trades.length !== prevProps.trades.length) {
+      const stocks = await this.stocksForDisplay()
+      this.setState({stocks})
+    }
   }
 
   render() {
