@@ -28,3 +28,15 @@ form div {
 .body-padding {
   padding: 20px;
 }
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.gray {
+  color: gray;
+}
