@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Header, Form, Button} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {buyStock} from '../store/trades'
-import NumberFormat from 'react-number-format'
+import DollarComp from './dollar-comp'
 
 class BuyStock extends Component {
   availableCash = stocks => {
@@ -26,15 +26,7 @@ class BuyStock extends Component {
     return (
       <React.Fragment>
         <Header as="h4">Buy Stocks</Header>
-        Budget:{' '}
-        <NumberFormat
-          value={availableCash}
-          displayType={'text'}
-          thousandSeparator={true}
-          decimalScale={2}
-          fixedDecimalScale={true}
-          prefix={'$'}
-        />
+        Budget: <DollarComp money={availableCash} />
         <Form
           onSubmit={evt => {
             evt.preventDefault()

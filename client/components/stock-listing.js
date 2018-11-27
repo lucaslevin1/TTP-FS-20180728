@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {List, Header} from 'semantic-ui-react'
-import NumberFormat from 'react-number-format'
+import DollarComp from './dollar-comp'
 
 export default class StockListing extends Component {
   render() {
@@ -17,14 +17,7 @@ export default class StockListing extends Component {
             return (
               <List.Item key={stock.symbol}>
                 <span className={diff}>{stock.symbol}</span> - {stock.shares},{' '}
-                <NumberFormat
-                  value={currentVal}
-                  displayType={'text'}
-                  thousandSeparator={true}
-                  decimalScale={2}
-                  fixedDecimalScale={true}
-                  prefix={'$'}
-                />
+                <DollarComp money={currentVal} />
               </List.Item>
             )
           })}

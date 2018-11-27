@@ -4,7 +4,7 @@ import StockListing from './stock-listing'
 import BuyStock from './buy-stock'
 import {Grid, Header} from 'semantic-ui-react'
 import {IEXClient} from 'iex-api'
-import NumberFormat from 'react-number-format'
+import DollarComp from './dollar-comp'
 
 const consolidateTrades = trades => {
   const tradeObj = {}
@@ -71,15 +71,7 @@ class Portfolio extends Component {
     return (
       <div>
         <Header as="h3">
-          Portfolio (Current Value:{' '}
-          <NumberFormat
-            value={currentValue}
-            displayType={'text'}
-            thousandSeparator={true}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            prefix={'$'}
-          />)
+          Portfolio (Current Value: <DollarComp money={currentValue} />)
         </Header>
         <Grid>
           <Grid.Column width={8}>

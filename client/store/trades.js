@@ -56,21 +56,9 @@ export const buyStock = (symbol, quantity, availableCash) => async dispatch => {
         dispatch(resetState())
       }
     } else {
-      if (resCheck) {
-        dispatch(symbolError(false))
-      } else {
-        dispatch(symbolError(true))
-      }
-      if (quantityCheck) {
-        dispatch(quantityError(false))
-      } else {
-        dispatch(quantityError(true))
-      }
-      if (cashCheck) {
-        dispatch(overageError(false))
-      } else {
-        dispatch(overageError(true))
-      }
+      dispatch(symbolError(!resCheck))
+      dispatch(quantityError(!quantityCheck))
+      dispatch(overageError(!cashCheck))
     }
   } catch (error) {
     console.error(error)
