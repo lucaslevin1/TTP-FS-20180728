@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import Portfolio from './portfolio'
+import {connect} from 'react-redux'
 import Trades from './trades'
-import {Menu} from 'semantic-ui-react'
+import {Menu, Header} from 'semantic-ui-react'
 
 class UserHome extends Component {
   constructor() {
@@ -16,8 +17,10 @@ class UserHome extends Component {
 
   render() {
     const {tab} = this.state
+    const {name} = this.props
     return (
-      <div className="body-padding">
+      <React.Fragment>
+        <Header as="h2">Welcome {name}</Header>
         <Menu pointing secondary>
           <Menu.Item
             name="portfolio"
@@ -31,9 +34,13 @@ class UserHome extends Component {
           />
         </Menu>
         {tab === 'Portfolio' ? <Portfolio /> : <Trades />}
-      </div>
+      </React.Fragment>
     )
   }
 }
 
-export default UserHome
+const mapState = state => ({
+  name: state.user.name
+})
+
+export default connect(mapState)(UserHome)

@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Grid, Header, List} from 'semantic-ui-react'
+import {Grid, Header, List, Icon} from 'semantic-ui-react'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className="navbar">
     <Grid>
-      <Grid.Column floated="left" width={8}>
-        <Header as="h1">TTP Stock Portfolio App</Header>
+      <Grid.Column width={8}>
+        <Header as="h1">
+          <Icon name="chart line" />
+          TTP Stock Portfolio App
+        </Header>
       </Grid.Column>
-      <Grid.Column floated="right" width={8} textAlign="right">
+      <Grid.Column width={8} textAlign="right">
         <List horizontal>
           {isLoggedIn ? (
             <React.Fragment>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List, Header} from 'semantic-ui-react'
+import {List, Header, Grid} from 'semantic-ui-react'
 import DollarComp from './dollar-comp'
 
 export default class StockListing extends Component {
@@ -17,8 +17,15 @@ export default class StockListing extends Component {
               if (stock.open > stock.latestPrice) diff = 'red'
               return (
                 <List.Item key={stock.symbol}>
-                  <span className={diff}>{stock.symbol}</span> - {stock.shares},{' '}
-                  <DollarComp money={currentVal} />
+                  <Grid>
+                    <Grid.Column width={8}>
+                      <span className={diff}>{stock.symbol}</span> -{' '}
+                      {stock.shares} Shares
+                    </Grid.Column>
+                    <Grid.Column width={8} textAlign="right">
+                      <DollarComp money={currentVal} />
+                    </Grid.Column>
+                  </Grid>
                 </List.Item>
               )
             })}
