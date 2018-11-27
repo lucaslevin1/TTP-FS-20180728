@@ -1,9 +1,26 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {List} from 'semantic-ui-react'
 
 class Trades extends Component {
   render() {
-    return <h3>Trades</h3>
+    const {trades} = this.props
+    return (
+      <List>
+        {trades.reverse().map(trade => {
+          return (
+            <List.Item key={trade.id}>
+              BUY ({trade.symbol}) - {trade.shares} Shares @ ${trade.price}
+            </List.Item>
+          )
+        })}
+      </List>
+    )
   }
 }
 
-export default Trades
+const mapState = state => ({
+  trades: state.user.trades
+})
+
+export default connect(mapState)(Trades)
