@@ -22,7 +22,8 @@ class BuyStock extends Component {
       symbolError,
       overageError
     } = this.props
-    const availableCash = this.availableCash(stocks)
+    let availableCash = 5000
+    if (stocks) availableCash = this.availableCash(stocks)
     return (
       <React.Fragment>
         <Header as="h4">Buy Stocks</Header>
