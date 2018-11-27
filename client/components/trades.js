@@ -7,13 +7,17 @@ class Trades extends Component {
     const {trades} = this.props
     return (
       <List>
-        {trades.reverse().map(trade => {
-          return (
-            <List.Item key={trade.id}>
-              BUY ({trade.symbol}) - {trade.shares} Shares @ ${trade.price}
-            </List.Item>
-          )
-        })}
+        {trades
+          .sort((trade1, trade2) => {
+            return trade2.id - trade1.id
+          })
+          .map(trade => {
+            return (
+              <List.Item key={trade.id}>
+                BUY ({trade.symbol}) - {trade.shares} Shares @ ${trade.price}
+              </List.Item>
+            )
+          })}
       </List>
     )
   }

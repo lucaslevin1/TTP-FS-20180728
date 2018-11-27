@@ -47,7 +47,6 @@ router.get('/me', async (req, res) => {
     where: {id: req.user.id},
     include: [{model: Trade}]
   })
-  console.log(user)
   res.json(user)
 })
 
