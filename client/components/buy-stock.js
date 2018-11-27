@@ -2,17 +2,15 @@ import React, {Component} from 'react'
 import {Header, Form, Button} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {buyStock} from '../store/trades'
+import NumberFormat from 'react-number-format'
 
 class BuyStock extends Component {
   availableCash = stocks => {
     return (
       5000 -
-      Math.round(
-        stocks.reduce((accum, stock) => {
-          return accum + stock.price * stock.shares
-        }, 0) * 100
-      ) /
-        100
+      stocks.reduce((accum, stock) => {
+        return accum + stock.price * stock.shares
+      }, 0)
     )
   }
 
@@ -28,7 +26,15 @@ class BuyStock extends Component {
     return (
       <React.Fragment>
         <Header as="h4">Buy Stocks</Header>
-        Budget: ${availableCash}
+        Budget:{' '}
+        <NumberFormat
+          value={availableCash}
+          displayType={'text'}
+          thousandSeparator={true}
+          decimalScale={2}
+          fixedDecimalScale={true}
+          prefix={'$'}
+        />
         <Form
           onSubmit={evt => {
             evt.preventDefault()
@@ -56,7 +62,8 @@ class BuyStock extends Component {
         )}
         {quantityError ? (
           <p className="red">
-            Error: Invalid quantity. The quantity needs to be greater than 0.
+            Error: Invalid quantity. The quantity needs to be greater than 0 and
+            a whole number.
           </p>
         ) : (
           <div />

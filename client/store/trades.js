@@ -39,7 +39,7 @@ export const buyStock = (symbol, quantity, availableCash) => async dispatch => {
     const apiRes = await iex.stockQuote(symbol)
     const price = apiRes.latestPrice
     const resCheck = typeof apiRes !== 'string'
-    const quantityCheck = quantity > 0
+    const quantityCheck = quantity > 0 && !(quantity % 1)
     let cashCheck = true
     if (resCheck && quantityCheck) {
       cashCheck = quantity * price <= availableCash
