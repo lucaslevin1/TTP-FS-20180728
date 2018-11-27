@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {List, Header} from 'semantic-ui-react'
+import NumberFormat from 'react-number-format'
 
 export default class StockListing extends Component {
   render() {
@@ -9,16 +10,21 @@ export default class StockListing extends Component {
         <Header as="h4">My Stocks</Header>
         <List divided>
           {stocksArr.map(stock => {
-            let currentVal =
-              Math.round(stock.latestPrice * stock.shares * 100) / 100
+            let currentVal = stock.latestPrice * stock.shares
             let diff = 'gray'
             if (stock.open < stock.latestPrice) diff = 'green'
             if (stock.open > stock.latestPrice) diff = 'red'
             return (
               <List.Item key={stock.symbol}>
-                <span className={diff}>{stock.symbol}</span> - {stock.shares}, ${
-                  currentVal
-                }
+                <span className={diff}>{stock.symbol}</span> - {stock.shares},{' '}
+                <NumberFormat
+                  value={currentVal}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  prefix={'$'}
+                />
               </List.Item>
             )
           })}

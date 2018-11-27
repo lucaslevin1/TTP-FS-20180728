@@ -4,6 +4,7 @@ import StockListing from './stock-listing'
 import BuyStock from './buy-stock'
 import {Grid, Header} from 'semantic-ui-react'
 import {IEXClient} from 'iex-api'
+import NumberFormat from 'react-number-format'
 
 const consolidateTrades = trades => {
   const tradeObj = {}
@@ -57,18 +58,29 @@ class Portfolio extends Component {
     }
   }
 
+  calcCurrentValue = stocks => {
+    return stocks.reduce((accum, stock) => {
+      return accum + stock.latestPrice * stock.shares
+    }, 0)
+  }
+
   render() {
     const {stocks} = this.state
     const {trades} = this.props
-    const currentValue =
-      Math.round(
-        stocks.reduce((accum, stock) => {
-          return accum + stock.latestPrice * stock.shares
-        }, 0) * 100
-      ) / 100
+    const currentValue = this.calcCurrentValue(stocks)
     return (
       <div>
-        <Header as="h3">Portfolio (Current Value: ${currentValue})</Header>
+        <Header as="h3">
+          Portfolio (Current Value:{' '}
+          <NumberFormat
+            value={currentValue}
+            displayType={'text'}
+            thousandSeparator={true}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            prefix={'$'}
+          />)
+        </Header>
         <Grid>
           <Grid.Column width={8}>
             <StockListing stocks={this.state.stocks} />
