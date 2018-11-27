@@ -13,6 +13,17 @@ class Portfolio extends Component {
       stocks: []
     }
   }
+  async componentDidMount() {
+    const stocks = await this.stocksForDisplay()
+    this.setState({stocks})
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.trades.length !== prevProps.trades.length) {
+      const stocks = await this.stocksForDisplay()
+      this.setState({stocks})
+    }
+  }
 
   async stocksForDisplay() {
     const {trades} = this.props
@@ -25,18 +36,6 @@ class Portfolio extends Component {
       stocks[i].open = info.open
     }
     return stocks
-  }
-
-  async componentDidMount() {
-    const stocks = await this.stocksForDisplay()
-    this.setState({stocks})
-  }
-
-  async componentDidUpdate(prevProps) {
-    if (this.props.trades.length !== prevProps.trades.length) {
-      const stocks = await this.stocksForDisplay()
-      this.setState({stocks})
-    }
   }
 
   consolidateTrades = trades => {
@@ -66,11 +65,10 @@ class Portfolio extends Component {
 
   render() {
     const {stocks} = this.state
-    const {trades, name} = this.props
+    const {trades} = this.props
     const currentValue = this.calcCurrentValue(stocks)
     return (
-      <div>
-        <Header>Welcome {name}</Header>
+      <React.Fragment>
         <Header as="h3">
           Portfolio (Current Value: <DollarComp money={currentValue} />)
         </Header>
@@ -82,14 +80,13 @@ class Portfolio extends Component {
             <BuyStock stocks={trades} />
           </Grid.Column>
         </Grid>
-      </div>
+      </React.Fragment>
     )
   }
 }
 
 const mapState = state => ({
-  trades: state.user.trades,
-  name: state.user.name
+  trades: state.user.trades
 })
 
 export default connect(mapState)(Portfolio)

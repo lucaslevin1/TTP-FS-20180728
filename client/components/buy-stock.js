@@ -26,8 +26,9 @@ class BuyStock extends Component {
     if (stocks) availableCash = this.availableCash(stocks)
     return (
       <React.Fragment>
-        <Header as="h4">Buy Stocks</Header>
-        Budget: <DollarComp money={availableCash} />
+        <Header as="h4">
+          Buy Stocks - Available Cash: <DollarComp money={availableCash} />
+        </Header>
         <Form
           onSubmit={evt => {
             evt.preventDefault()

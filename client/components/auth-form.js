@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {Form, Button} from 'semantic-ui-react'
+import {Form, Button, Header} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -10,28 +10,31 @@ import {Form, Button} from 'semantic-ui-react'
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
   return (
-    <div className="body-padding">
+    <React.Fragment>
+      <Header as="h2">{displayName}</Header>
       <Form onSubmit={handleSubmit} name={name}>
-        {name === 'signup' ? (
+        <Form.Group widths="equal">
+          {name === 'signup' ? (
+            <Form.Field>
+              <label htmlFor="userName">Name</label>
+              <input name="userName" type="text" placeholder="Name" />
+            </Form.Field>
+          ) : (
+            <div className="no-margin" />
+          )}
           <Form.Field>
-            <label htmlFor="userName">Name</label>
-            <input name="userName" type="text" placeholder="Name" />
+            <label htmlFor="email">Email</label>
+            <input name="email" type="text" placeholder="Email" />
           </Form.Field>
-        ) : (
-          <div />
-        )}
-        <Form.Field>
-          <label htmlFor="email">Email</label>
-          <input name="email" type="text" placeholder="Email" />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="password">Password</label>
-          <input name="password" type="password" placeholder="Password" />
-        </Form.Field>
+          <Form.Field>
+            <label htmlFor="password">Password</label>
+            <input name="password" type="password" placeholder="Password" />
+          </Form.Field>
+        </Form.Group>
         <Button type="submit">{displayName}</Button>
         {error && error.response && <div> {error.response.data} </div>}
       </Form>
-    </div>
+    </React.Fragment>
   )
 }
 

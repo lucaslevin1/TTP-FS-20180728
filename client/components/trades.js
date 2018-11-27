@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {List} from 'semantic-ui-react'
+import {List, Header} from 'semantic-ui-react'
+import dateFormat from 'dateformat'
 
 class Trades extends Component {
   render() {
-    const {trades} = this.props
+    let {trades} = this.props
+    if (!trades) trades = []
     return (
       <React.Fragment>
+        <Header as="h3">Trade History</Header>
         {trades.length ? (
           <List>
             {trades
@@ -16,9 +19,8 @@ class Trades extends Component {
               .map(trade => {
                 return (
                   <List.Item key={trade.id}>
-                    BUY ({trade.symbol}) - {trade.shares} Shares @ ${
-                      trade.price
-                    }
+                    {dateFormat(trade.createdAt)} - BUY ({trade.symbol}) -{' '}
+                    {trade.shares} Shares @ ${trade.price}
                   </List.Item>
                 )
               })}
