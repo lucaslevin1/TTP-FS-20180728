@@ -50,11 +50,9 @@ export const buyStock = (symbol, quantity, availableCash) => async dispatch => {
         quantity,
         price
       })
-      if (resTrade.data.id) {
-        const resUser = await axios.get('/auth/me')
-        dispatch(getUser(resUser.data))
-        dispatch(resetState())
-      }
+      const resUser = await axios.get('/auth/me')
+      dispatch(getUser(resUser.data))
+      dispatch(resetState())
     } else {
       dispatch(symbolError(!resCheck))
       dispatch(quantityError(!quantityCheck))
