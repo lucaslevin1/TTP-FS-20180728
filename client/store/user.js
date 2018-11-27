@@ -1,6 +1,5 @@
 import axios from 'axios'
 import history from '../history'
-import {IEXClient} from 'iex-api'
 
 /**
  * ACTION TYPES
@@ -16,7 +15,7 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+export const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
@@ -54,32 +53,6 @@ export const logout = () => async dispatch => {
     history.push('/login')
   } catch (err) {
     console.error(err)
-  }
-}
-
-export const buyStock = (symbol, quantity, availableCash) => async dispatch => {
-  try {
-    const fetch = window.fetch.bind(window)
-    const iex = new IEXClient(fetch)
-    let apiRes = await iex.stockQuote(symbol)
-    let price = apiRes.latestPrice
-    if (
-      typeof apiRes !== 'string' &&
-      quantity > 0 &&
-      quantity * price <= availableCash
-    ) {
-      const resTrade = await axios.post('/api/trades/', {
-        symbol,
-        quantity,
-        price
-      })
-      if (resTrade.data.id) {
-        const resUser = await axios.get('/auth/me')
-        dispatch(getUser(resUser.data || defaultUser))
-      }
-    }
-  } catch (error) {
-    console.error(error)
   }
 }
 
