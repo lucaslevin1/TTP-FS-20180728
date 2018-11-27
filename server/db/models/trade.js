@@ -8,11 +8,17 @@ const Trade = db.define('trade', {
   },
   shares: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      min: 1
+    }
   },
   price: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      min: 0.01
+    }
   }
 })
 
