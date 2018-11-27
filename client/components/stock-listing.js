@@ -29,7 +29,7 @@ class StockListing extends Component {
       <List divided>
         {stocksArr.map(stock => {
           return (
-            <List.Item key="stock.symbol">
+            <List.Item key={stock.symbol}>
               {stock.symbol} - {stock.shares}
             </List.Item>
           )
